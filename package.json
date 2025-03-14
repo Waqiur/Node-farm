@@ -1,0 +1,24 @@
+{
+    "name": "node-farm",
+    "version": "1.0.0",
+    "description": "",
+    "homepage": "https://github.com/Waqiur/Node-farm#readme",
+    "bugs": {
+        "url": "https://github.com/Waqiur/Node-farm/issues"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Waqiur/Node-farm.git"
+    },
+    "license": "ISC",
+    "author": "Waqiur",
+    "type": "module",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "nodemon index.js"
+    },
+    "devDependencies": {
+        "nodemon": "^3.1.9"
+    }
+}
