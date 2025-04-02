@@ -26,8 +26,36 @@ const dataObj = JSON.parse(data);
 
 const PORT = 3000; // Change port to 3000
 
+const staticFilePath = path.join(__dirname, "../assets");
+
 export default function handler(req, res) {
     const { query, pathname } = url.parse(req.url, true);
+
+    // Serve favicon.ico explicitly
+    if (pathname === "/favicon.ico") {
+        const filePath = path.join(__dirname, "../assets/favicon-32x32.png");
+        res.writeHead(200, { "Content-Type": "image/png" });
+        fs.createReadStream(filePath).pipe(res);
+        return;
+    }
+
+    // Serve static files
+    if (pathname.startsWith("/assets")) {
+        const filePath = path.join(__dirname, "..", pathname);
+        if (fs.existsSync(filePath) && fs.statSync(filePath).isFile()) {
+            const ext = path.extname(filePath).toLowerCase();
+            const mimeTypes = {
+                ".png": "image/png",
+                ".ico": "image/x-icon",
+                ".json": "application/json",
+            };
+            res.writeHead(200, {
+                "Content-Type": mimeTypes[ext] || "application/octet-stream",
+            });
+            fs.createReadStream(filePath).pipe(res);
+            return;
+        }
+    }
 
     if (pathname === "/" || pathname === "/overview") {
         res.writeHead(200, { "Content-Type": "text/html" });
